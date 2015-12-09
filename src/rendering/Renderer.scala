@@ -3,7 +3,7 @@ package rendering
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Matrix4
-import models.Boid
+import flocking.Boid
 import org.lwjgl.opengl.GL11
 
 object Renderer {
