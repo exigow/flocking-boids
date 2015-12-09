@@ -16,7 +16,7 @@ object VertexArrayTransformations {
     )
   )
 
-  def forEachVertex(vertices: Array[Float], vertex: (Float, Float) => (Float, Float)) : Array[Float] = {
+  private def forEachVertex(vertices: Array[Float], vertex: (Float, Float) => (Float, Float)) : Array[Float] = {
     val result = new Array[Float](vertices.length)
     for (pivot <- 0 to 3) {
       val pivotX = pivot * 2
