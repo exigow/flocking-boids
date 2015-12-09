@@ -12,12 +12,7 @@ class Application extends ApplicationAdapter {
     setToOrtho(true, Gdx.graphics.getWidth, Gdx.graphics.getHeight)
     position.set(0, 0, 0)
   }
-  val arrowVertices : Array[Float] = Array(
-    -32, -16,
-    -24, 0,
-    -32, 16,
-    32, 0
-  )
+
   override def create(): Unit = {
   }
 
@@ -26,12 +21,23 @@ class Application extends ApplicationAdapter {
     clearBackground()
     renderer.setProjectionMatrix(camera.combined)
     renderer.begin(ShapeRenderer.ShapeType.Line)
-    renderer.polygon(arrowVertices)
-    renderer.polygon(VertexArrayTransformations.move(VertexArrayTransformations.rotate(arrowVertices, .5f), 32, 64))
+    renderArrow(0, 0, 0)
     renderer.end()
   }
 
-  def clearBackground(): Unit = {
+  private def renderArrow(x: Float, y: Float, rotation: Float): Unit = {
+    val arrowVertices : Array[Float] = Array(
+      -32, -16,
+      -24, 0,
+      -32, 16,
+      32, 0
+    )
+    val rotated = VertexArrayTransformations.rotate(arrowVertices, rotation)
+    val transformed = VertexArrayTransformations.move(rotated, x, y)
+    renderer.polygon(transformed)
+  }
+
+  private def clearBackground(): Unit = {
     Gdx.gl.glClearColor(.5f, .5f, .5f, 1f)
     Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT)
   }
