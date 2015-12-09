@@ -2,22 +2,17 @@ package flocking
 
 import java.lang.Math._
 
-import com.badlogic.gdx.math.MathUtils.PI
-import com.badlogic.gdx.math.MathUtils._
-import com.badlogic.gdx.math.MathUtils.atan2
-import com.badlogic.gdx.math.MathUtils.cos
-import com.badlogic.gdx.math.MathUtils.random
-import com.badlogic.gdx.math.MathUtils.sin
+import com.badlogic.gdx.math.MathUtils.{PI, atan2, cos, random, sin}
 import com.badlogic.gdx.math.{MathUtils, Vector2}
 
 class World {
 
-  val boids = Seq.fill(8)(createRandomBoid)
+  val boids = Seq.fill(16)(createRandomBoid)
 
   def update(): Unit = {
     for (boid <- boids) {
       val others = boids.filterNot(elm => elm == boid)
-      val separation = SeparationRule.separationVector(boid, others)
+      val separation = SeparationRule.separationVector(boid, others).scl(32)
       boid.separation.set(separation)
       move(boid, new Vector2(boid.position).add(boid.separation))
     }
@@ -43,13 +38,9 @@ class World {
     new Boid(position, direction)
   }
 
-  def pointDirection(a: Vector2, b: Vector2): Float = pointDirection(a.x, a.y, b.x, b.y)
+  def pointDirection(a: Vector2, b: Vector2) = atan2(a.y - b.y, a.x - b.x)
 
-  def pointDirection(ax: Float, ay: Float, bx: Float, by: Float): Float = atan2(ay - by, ax - bx)
-
-  def pointDistance(a: Vector2, b: Vector2): Float = pointDistance(a.x, a.y, b.x, b.y)
-
-  def pointDistance(ax: Float, ay: Float, bx: Float, by: Float): Float = sqrt(pow(bx - ax, 2) + pow(by - ay, 2)).toFloat
+  def pointDistance(a: Vector2, b: Vector2) = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2)).toFloat
 
   def angdiff(angle0: Float, angle1: Float): Float = {
     val angle0d = angle0 * MathUtils.radiansToDegrees

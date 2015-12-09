@@ -16,14 +16,15 @@ object Renderer {
     renderer.begin(ShapeRenderer.ShapeType.Line)
     for (boid <- boids) {
       renderArrow(boid.position.x, boid.position.y, boid.rotation)
-      renderLineRelativeScaled(boid.position, boid.separation, 1)
-      renderer.circle(boid.position.x, boid.position.y, 128)
+      renderCross(new Vector2(boid.position).add(new Vector2(boid.separation)))
     }
     renderer.end()
   }
 
-  private def renderLineRelativeScaled(where: Vector2, plus: Vector2, scale: Float): Unit =
-    renderer.line(where, new Vector2(where).add(new Vector2(plus).scl(scale)))
+  private def renderCross(where: Vector2): Unit = {
+    renderer.line(where.x - 8, where.y, where.x + 8, where.y)
+    renderer.line(where.x, where.y - 8, where.x, where.y + 8)
+  }
 
   private def renderArrow(x: Float, y: Float, rotation: Float): Unit = {
     val arrowVertices : Array[Float] = Array(
