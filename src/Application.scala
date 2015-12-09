@@ -1,5 +1,4 @@
-import java.lang.Math.{sin, cos}
-
+import _root_.VertexArrayTransformations.{move, rotate}
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.{ApplicationAdapter, Gdx}
@@ -32,8 +31,8 @@ class Application extends ApplicationAdapter {
       -32, 16,
       32, 0
     )
-    val rotated = VertexArrayTransformations.rotate(arrowVertices, rotation)
-    val transformed = VertexArrayTransformations.move(rotated, x, y)
+    val rotated = rotate(arrowVertices, rotation)
+    val transformed = move(rotated, x, y)
     renderer.polygon(transformed)
   }
 
