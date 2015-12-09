@@ -16,15 +16,14 @@ object VertexArrayTransformations {
     )
   )
 
-  private def forEachVertex(vertices: Array[Float], vertex: (Float, Float) => (Float, Float)) : Array[Float] = {
+  private def forEachVertex(vertices: Array[Float], transform: (Float, Float) => (Float, Float)) : Array[Float] = {
     val result = new Array[Float](vertices.length)
     val count = vertices.length / 2 - 1
     for (pivot <- 0 to count) {
-      val pivotX = pivot * 2
-      val pivotY = pivot * 2 + 1
-      val newPosition = vertex.apply(vertices(pivotX), vertices(pivotY))
-      result(pivotX) = newPosition._1
-      result(pivotY) = newPosition._2
+      val pointer = (pivot * 2, pivot * 2 + 1)
+      val transformed = transform.apply(vertices(pointer._1), vertices(pointer._2))
+      result(pointer._1) = transformed._1
+      result(pointer._2) = transformed._2
     }
     result
   }
