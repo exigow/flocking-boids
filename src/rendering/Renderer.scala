@@ -2,7 +2,7 @@ package rendering
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.Matrix4
+import com.badlogic.gdx.math.{Vector2, Matrix4}
 import flocking.Boid
 import org.lwjgl.opengl.GL11
 
@@ -14,11 +14,17 @@ object Renderer {
     clearBackground()
     renderer.setProjectionMatrix(projection)
     renderer.begin(ShapeRenderer.ShapeType.Line)
-    for (boid <- boids)
-      renderArrow(boid.x, boid.y, boid.rotation)
+    for (boid <- boids) {
+      renderArrow(boid.position.x, boid.position.y, boid.rotation)
+      renderLineRelativeScaled(boid.position, boid.separation, 1)
+      renderer.circle(boid.position.x, boid.position.y, 128)
+    }
     renderer.end()
   }
-  
+
+  private def renderLineRelativeScaled(where: Vector2, plus: Vector2, scale: Float): Unit =
+    renderer.line(where, new Vector2(where).add(new Vector2(plus).scl(scale)))
+
   private def renderArrow(x: Float, y: Float, rotation: Float): Unit = {
     val arrowVertices : Array[Float] = Array(
       -8, -4,
