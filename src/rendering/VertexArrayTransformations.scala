@@ -1,3 +1,5 @@
+package rendering
+
 import java.lang.Math._
 
 object VertexArrayTransformations {
