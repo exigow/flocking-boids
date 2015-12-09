@@ -1,13 +1,13 @@
 package rendering
 
-import java.lang.Math._
+import com.badlogic.gdx.math.MathUtils._
 
 object VertexArrayTransformations {
 
   def rotate(vertices: Array[Float], radians: Float): Array[Float] = forEachVertex(vertices,
     (x, y) => (
-      (cos(radians) * x - sin(radians) * y).toFloat,
-      (sin(radians) * x + cos(radians) * y).toFloat
+      cos(radians) * x - sin(radians) * y,
+      sin(radians) * x + cos(radians) * y
     )
   )
   

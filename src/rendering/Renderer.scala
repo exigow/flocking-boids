@@ -32,7 +32,7 @@ object Renderer {
   }
 
   private def clearBackground(): Unit = {
-    Gdx.gl.glClearColor(.5f, .5f, .5f, 1f)
+    Gdx.gl.glClearColor(.25f, .25f, .25f, 1f)
     Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT)
   }
 

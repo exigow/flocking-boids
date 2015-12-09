@@ -4,10 +4,13 @@ import com.badlogic.gdx.math.MathUtils._
 
 class World {
 
-  val boids: Seq[Boid] = Seq.fill(10)(createRandomBoid)
+  val boids = Seq.fill(10)(createRandomBoid)
 
   def update(): Unit = {
-
+    for (boid <- boids) {
+      boid.x += cos(boid.rotation) * .125f
+      boid.y += sin(boid.rotation) * .125f
+    }
   }
 
   private def createRandomBoid: Boid = {
