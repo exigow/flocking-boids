@@ -4,13 +4,17 @@ object VertexArrayTransformations {
 
   def rotate(vertices: Array[Float], radians: Float): Array[Float] = forEachVertex(vertices,
     (x, y) => (
-        (cos(radians) * x - sin(radians) * y).toFloat,
-        (sin(radians) * x + cos(radians) * y).toFloat
-      )
+      (cos(radians) * x - sin(radians) * y).toFloat,
+      (sin(radians) * x + cos(radians) * y).toFloat
     )
+  )
   
   def move(vertices: Array[Float], transformX: Float, transformY: Float): Array[Float] = forEachVertex(vertices,
-    (x, y) => (x + transformX, y + transformY))
+    (x, y) => (
+      x + transformX,
+      y + transformY
+    )
+  )
 
   def forEachVertex(vertices: Array[Float], vertex: (Float, Float) => (Float, Float)) : Array[Float] = {
     val result = new Array[Float](vertices.length)
