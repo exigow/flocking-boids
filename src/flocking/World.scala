@@ -8,14 +8,17 @@ import com.badlogic.gdx.math.{MathUtils, Vector2}
 
 class World {
 
-  val boids = Seq.fill(8)(createRandomBoid)
+  val boids = Seq.fill(64)(createRandomBoid)
 
   def update(): Unit = {
     for (boid <- boids) {
       val others = boids.filterNot(tested => tested == boid)
-      val separation = SeparationRule.separationVector(boid, others, 64)
+      val separation = FlockingRules.separationVector(boid, others, 64)
+      val cohesion = FlockingRules.cohesionVector(boid, others, 64)
       boid.separation.set(separation)
-      move(boid, new Vector2(boid.position).add(boid.separation))
+      boid.cohesion.set(cohesion)
+      val combo = new Vector2().add(separation).add(cohesion)
+      move(boid, new Vector2(boid.position).add(combo))
     }
   }
 
