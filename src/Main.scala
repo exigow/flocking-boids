@@ -1,3 +1,4 @@
+import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.{Gdx, ApplicationAdapter}
 import com.badlogic.gdx.backends.lwjgl.{LwjglApplication, LwjglApplicationConfiguration}
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -27,6 +28,8 @@ object Main {
 
     override def render(): Unit = {
       camera.update()
+      val mouse3 = camera.unproject(new Vector3(Gdx.input.getX, Gdx.input.getY, 0))
+      world.boids.head.position.set(new Vector2(mouse3.x, mouse3.y))
       world.update()
       Renderer.render(camera.combined, world.boids)
     }

@@ -2,19 +2,21 @@ package flocking
 
 import java.lang.Math._
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.MathUtils.{PI, atan2, cos, random, sin}
 import com.badlogic.gdx.math.{MathUtils, Vector2}
 
 class World {
 
-  val boids = Seq.fill(16)(createRandomBoid)
+  val boids = Seq.fill(2)(createRandomBoid)
 
   def update(): Unit = {
     for (boid <- boids) {
       val others = boids.filterNot(elm => elm == boid)
-      val separation = SeparationRule.separationVector(boid, others).scl(32)
+      val separation = SeparationRule.separationVector(boid, others, 64)
+      //println(separation)
       boid.separation.set(separation)
-      move(boid, new Vector2(boid.position).add(boid.separation))
+      //move(boid, new Vector2(boid.position).add(boid.separation))
     }
   }
 
@@ -31,7 +33,7 @@ class World {
   }
 
   private def createRandomBoid: Boid = {
-    val size = 1f
+    val size = 0f
     def randSize = random(-size, size)
     val position = new Vector2(randSize, randSize)
     val direction = random(PI)
