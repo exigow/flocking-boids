@@ -15,15 +15,14 @@ object Renderer {
     renderer.setProjectionMatrix(projection)
     renderer.begin(ShapeRenderer.ShapeType.Line)
     renderer.setColor(.25f, .25f, .25f, 1)
-    for (boid <- boids) {
+    for (boid <- boids)
       renderer.circle(boid.position.x, boid.position.y, 64)
-    }
-    renderer.setColor(1, 1, 1, 1)
-    for (boid <- boids) {
-      renderArrow(boid.position.x, boid.position.y, boid.rotation)
+    renderer.setColor(1f, .5f, .5f, 1)
+    for (boid <- boids)
       renderCross(new Vector2(boid.position).add(new Vector2(boid.separation)))
-
-    }
+    renderer.setColor(1, 1, 1, 1)
+    for (boid <- boids)
+      renderArrow(boid.position.x, boid.position.y, boid.rotation)
     renderer.end()
   }
 
