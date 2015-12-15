@@ -11,7 +11,7 @@ object Main {
     val configuration = new LwjglApplicationConfiguration {
       title = "main"
       width = 1024
-      height = 640
+      height = 1024
       samples = 8
     }
     new LwjglApplication(new Application, configuration)

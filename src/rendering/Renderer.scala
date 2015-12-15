@@ -16,17 +16,23 @@ object Renderer {
     renderer.begin(ShapeRenderer.ShapeType.Line)
     renderer.setColor(.25f, .25f, .25f, 1)
     for (boid <- boids)
-      renderer.circle(boid.position.x, boid.position.y, 64)
+      renderer.circle(boid.position.x, boid.position.y, 128)
     renderer.setColor(1, .5f, .5f, 1)
     for (boid <- boids)
-      renderCross(new Vector2(boid.position).add(new Vector2(boid.separation)))
+      renderRelativeVectorCross(boid.position, boid.separation)
     renderer.setColor(.5f, 1, .5f, 1)
     for (boid <- boids)
-      renderCross(new Vector2(boid.position).add(new Vector2(boid.cohesion)))
+      renderRelativeVectorCross(boid.position, boid.cohesion)
     renderer.setColor(1, 1, 1, 1)
     for (boid <- boids)
       renderArrow(boid.position.x, boid.position.y, boid.rotation)
     renderer.end()
+  }
+
+  private def renderRelativeVectorCross(position: Vector2, vector: Vector2): Unit = {
+    val relative = new Vector2(position).add(new Vector2(vector))
+    renderer.line(position.x, position.y, position.x + vector.x, position.y + vector.y)
+    renderCross(relative)
   }
 
   private def renderCross(where: Vector2): Unit = {
