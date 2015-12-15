@@ -19,20 +19,17 @@ object FlockingRules {
   }
 	
 	def cohesionVector(boid: Boid, neighbors: Seq[Boid], maxDistance: Float): Vector2 = {
-		var resultX : Float = 0
-		var resultY : Float = 0
+		val result = new Vector2
 		var count : Int = 1
 		for (neighbor <- neighbors) {
 			val distance = distanceBetween(boid.position, neighbor.position)
 			if (distance < maxDistance) {
-				resultX += neighbor.position.x - boid.position.x
-				resultY += neighbor.position.y - boid.position.y
+				result.x += neighbor.position.x - boid.position.x
+				result.y += neighbor.position.y - boid.position.y
 				count += 1
 			}
 		}
-		resultX /= count
-		resultY /= count
-		new Vector2(resultX, resultY)
+		result.scl(1f / count.toFloat)
 	}
 	
 	def normalizedInfluence(distance: Float, maxDistance: Float) =
