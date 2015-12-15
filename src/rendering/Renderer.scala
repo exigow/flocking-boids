@@ -2,7 +2,7 @@ package rendering
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.{Vector2, Matrix4}
+import com.badlogic.gdx.math.{Matrix4, Vector2}
 import flocking.Boid
 import org.lwjgl.opengl.GL11
 
@@ -42,10 +42,10 @@ object Renderer {
 
   private def renderArrow(x: Float, y: Float, rotation: Float): Unit = {
     val arrowVertices : Array[Float] = Array(
-      -8, -4,
-      -6, 0,
-      -8, 4,
-      8, 0
+      -16, -8,
+      -12, 0,
+      -16, 8,
+      16, 0
     )
     val rotated = VertexArrayTransformations.rotate(arrowVertices, rotation)
     val transformed = VertexArrayTransformations.move(rotated, x, y)
