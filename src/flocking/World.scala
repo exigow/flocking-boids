@@ -52,7 +52,7 @@ class World {
     val size = 64
     def randSize = random(-size, size)
     val position = new Vector2(randSize, randSize)
-    val direction = random(PI)
+    val direction = random(PI * 2)
     new Boid(position, direction)
   }
 
