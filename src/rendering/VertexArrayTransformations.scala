@@ -5,17 +5,15 @@ import com.badlogic.gdx.math.MathUtils._
 object VertexArrayTransformations {
 
   def rotate(vertices: Array[Float], radians: Float): Array[Float] = forEachVertex(vertices,
-    (x, y) => (
-      cos(radians) * x - sin(radians) * y,
-      sin(radians) * x + cos(radians) * y
-    )
+    (x, y) => (cos(radians) * x - sin(radians) * y, sin(radians) * x + cos(radians) * y)
   )
   
   def move(vertices: Array[Float], transformX: Float, transformY: Float): Array[Float] = forEachVertex(vertices,
-    (x, y) => (
-      x + transformX,
-      y + transformY
-    )
+    (x, y) => (x + transformX, y + transformY)
+  )
+
+  def scale(vertices: Array[Float], scale: Float): Array[Float] = forEachVertex(vertices,
+    (x, y) => (x * scale, y * scale)
   )
 
   private def forEachVertex(vertices: Array[Float], transform: (Float, Float) => (Float, Float)) : Array[Float] = {

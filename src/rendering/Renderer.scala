@@ -16,7 +16,7 @@ object Renderer {
     renderer.begin(ShapeRenderer.ShapeType.Line)
     renderer.setColor(.25f, .25f, .25f, 1)
     for (boid <- boids)
-      renderer.circle(boid.position.x, boid.position.y, 128)
+      renderer.circle(boid.position.x, boid.position.y, 64)
     renderer.setColor(1, .5f, .5f, 1)
     for (boid <- boids)
       renderRelativeVectorCross(boid.position, boid.separation)
@@ -45,12 +45,13 @@ object Renderer {
 
   private def renderArrow(x: Float, y: Float, rotation: Float): Unit = {
     val arrowVertices : Array[Float] = Array(
-      -16, -8,
-      -12, 0,
-      -16, 8,
-      16, 0
+      -1, -.5f,
+      -.75f, 0,
+      -1, .5f,
+      1f, 0
     )
-    val rotated = VertexArrayTransformations.rotate(arrowVertices, rotation)
+    val scaled = VertexArrayTransformations.scale(arrowVertices, 8)
+    val rotated = VertexArrayTransformations.rotate(scaled, rotation)
     val transformed = VertexArrayTransformations.move(rotated, x, y)
     renderer.polygon(transformed)
   }
