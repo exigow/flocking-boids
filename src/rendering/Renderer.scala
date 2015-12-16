@@ -14,9 +14,6 @@ object Renderer {
     clearBackground()
     renderer.setProjectionMatrix(projection)
     renderer.begin(ShapeRenderer.ShapeType.Line)
-    renderer.setColor(.25f, .25f, .25f, 1)
-    for (boid <- boids)
-      renderer.circle(boid.position.x, boid.position.y, 64)
     renderer.setColor(1, .5f, .5f, 1)
     for (boid <- boids)
       renderRelativeVectorCross(boid.position, boid.separation)
@@ -39,8 +36,9 @@ object Renderer {
   }
 
   private def renderCross(where: Vector2): Unit = {
-    renderer.line(where.x - 8, where.y, where.x + 8, where.y)
-    renderer.line(where.x, where.y - 8, where.x, where.y + 8)
+    val size = 4
+    renderer.line(where.x - size, where.y, where.x + size, where.y)
+    renderer.line(where.x, where.y - size, where.x, where.y + size)
   }
 
   private def renderArrow(x: Float, y: Float, rotation: Float): Unit = {

@@ -12,9 +12,10 @@ class World {
   def update(): Unit = {
     for (boid <- boids) {
       val others = boids.filterNot(tested => tested == boid)
-      val separation = FlockingRules.separationVector(boid, others, 64)
-      val cohesion = FlockingRules.cohesionVector(boid, others, 128)
-      val alignment = FlockingRules.alignmentVector(boid, others, 64)
+      val radius = 64
+      val separation = FlockingRules.separationVector(boid, others, radius)
+      val cohesion = FlockingRules.cohesionVector(boid, others, radius)
+      val alignment = FlockingRules.alignmentVector(boid, others, radius)
       boid.separation.set(separation)
       boid.cohesion.set(cohesion)
       boid.alignment.set(alignment)
