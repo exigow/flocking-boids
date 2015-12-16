@@ -13,7 +13,7 @@ class World {
     for (boid <- boids) {
       val others = boids.filterNot(tested => tested == boid)
       val separation = FlockingRules.separationVector(boid, others, 64)
-      val cohesion = FlockingRules.cohesionVector(boid, others, 64)
+      val cohesion = FlockingRules.cohesionVector(boid, others, 128)
       val alignment = FlockingRules.alignmentVector(boid, others, 64)
       boid.separation.set(separation)
       boid.cohesion.set(cohesion)
@@ -48,7 +48,7 @@ class World {
   }
 
   private def createRandomBoid: Boid = {
-    val size = 512
+    val size = 64
     def randSize = random(-size, size)
     val position = new Vector2(randSize, randSize)
     val direction = random(PI)

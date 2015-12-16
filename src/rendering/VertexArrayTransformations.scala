@@ -20,10 +20,10 @@ object VertexArrayTransformations {
     val result = new Array[Float](vertices.length)
     val count = vertices.length / 2 - 1
     for (pivot <- 0 to count) {
-      val pointer = (pivot * 2, pivot * 2 + 1)
-      val transformed = transform.apply(vertices(pointer._1), vertices(pointer._2))
-      result(pointer._1) = transformed._1
-      result(pointer._2) = transformed._2
+      val (px, py) = (pivot * 2, pivot * 2 + 1)
+      val (tx, ty) = transform.apply(vertices(px), vertices(py))
+      result(px) = tx
+      result(py) = ty
     }
     result
   }
