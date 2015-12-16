@@ -7,16 +7,18 @@ import com.badlogic.gdx.math.{MathUtils, Vector2}
 
 class World {
 
-  val boids = Seq.fill(64)(createRandomBoid)
+  val boids = Seq.fill(32)(createRandomBoid)
 
   def update(): Unit = {
     for (boid <- boids) {
       val others = boids.filterNot(tested => tested == boid)
       val separation = FlockingRules.separationVector(boid, others, 64)
       val cohesion = FlockingRules.cohesionVector(boid, others, 128)
+      val alignment = FlockingRules.alignmentVector(boid, others, 64)
       boid.separation.set(separation)
       boid.cohesion.set(cohesion)
-      val combo = new Vector2().add(separation).add(cohesion).scl(.5f)
+      boid.alignment.set(alignment)
+      val combo = new Vector2().add(separation).add(cohesion).add(alignment)
       move(boid, new Vector2(boid.position).add(combo))
     }
 
@@ -37,7 +39,7 @@ class World {
     val acceleration = .0125f
     val directionToDesignation = pointDirection(where, boid.position)
     val distanceToDesignation = pointDistance(where, boid.position)
-    val flySpeedTarget = Math.min(1.25f + distanceToDesignation * .025f, boid.maxSpeed)
+    val flySpeedTarget = Math.min(0 + distanceToDesignation * .025f, boid.maxSpeed)
     boid.speed += (flySpeedTarget - boid.speed) * acceleration
     boid.rotation += angdiff(directionToDesignation, boid.rotation) * .0125f
     val vx = boid.speed * cos(boid.rotation)

@@ -1,6 +1,6 @@
 package flocking
 
-import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.{MathUtils, Vector2}
 
 object FlockingRules {
 
@@ -29,6 +29,19 @@ object FlockingRules {
 			count += 1
 		}
 		result.scl(1f / count.toFloat).add(-boid.position.x, -boid.position.y)
+	}
+
+	def alignmentVector(boid: Boid, neighbors: Seq[Boid], maxDistance: Float): Vector2 = {
+		val others = neighbors.filter(other => distanceBetween(boid.position, other.position) < maxDistance)
+		if (others.isEmpty)
+			return new Vector2
+		val result = new Vector2
+		for (other <- others) {
+			val x = MathUtils.cos(other.rotation)
+			val y = MathUtils.sin(other.rotation)
+			result.add(x, y)
+		}
+		result.nor().scl(maxDistance)
 	}
 	
 	def normalizedInfluence(distance: Float, maxDistance: Float) =
