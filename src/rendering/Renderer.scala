@@ -14,19 +14,28 @@ object Renderer {
     clearBackground()
     renderer.setProjectionMatrix(projection)
     renderer.begin(ShapeRenderer.ShapeType.Line)
-    renderer.setColor(1, .5f, .5f, 1)
+    renderer.setColor(.25f, .25f, .25f, 1)
+    renderGrid()
+    /*renderer.setColor(1, .5f, .5f, 1)
     for (boid <- boids)
-      renderRelativeVectorCross(boid.position, boid.separation)
+      renderRelativeVectorCross(boid.pos, boid.separation)
     renderer.setColor(.5f, 1, .5f, 1)
     for (boid <- boids)
-      renderRelativeVectorCross(boid.position, boid.cohesion)
+      renderRelativeVectorCross(boid.pos, boid.cohesion)
     renderer.setColor(.5f, .5f, 1, 1)
     for (boid <- boids)
-      renderRelativeVectorCross(boid.position, boid.alignment)
+      renderRelativeVectorCross(boid.pos, boid.alignment)*/
     renderer.setColor(1, 1, 1, 1)
     for (boid <- boids)
-      renderArrow(boid.position.x, boid.position.y, boid.rotation)
+      renderArrow(boid.pos.x, boid.pos.y, boid.rotation)
     renderer.end()
+  }
+
+  private def renderGrid(): Unit = {
+    val max = 16
+    val scale = 64
+    for (x <- 0 to max) renderer.line(x * scale, 0, x * scale, scale * max)
+    for (y <- 0 to max) renderer.line(0, y * scale, scale * max, y * scale)
   }
 
   private def renderRelativeVectorCross(position: Vector2, vector: Vector2): Unit = {

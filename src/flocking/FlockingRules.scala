@@ -7,10 +7,10 @@ object FlockingRules {
   def separationVector(boid: Boid, neighbors: Seq[Boid], maxDistance: Float): Vector2 = {
 		val force = new Vector2
     for (neighbor <- neighbors) {
-			val distance = distanceBetween(boid.position, neighbor.position)
+			val distance = distanceBetween(boid.pos, neighbor.pos)
 			if (distance < maxDistance) {
 				val fix = normalizedInfluence(distance, maxDistance)
-				val difference = new Vector2(boid.position).sub(neighbor.position).nor().scl(fix)
+				val difference = new Vector2(boid.pos).sub(neighbor.pos).nor().scl(fix)
 				val scaled = difference.scl(maxDistance)
 				force.add(scaled)
 			}
@@ -19,20 +19,20 @@ object FlockingRules {
   }
 	
 	def cohesionVector(boid: Boid, neighbors: Seq[Boid], maxDistance: Float): Vector2 = {
-		val others = neighbors.filter(other => distanceBetween(boid.position, other.position) < maxDistance)
+		val others = neighbors.filter(other => distanceBetween(boid.pos, other.pos) < maxDistance)
 		if (others.isEmpty)
 			return new Vector2
 		val result = new Vector2
 		var count : Int = 0
 		for (other <- others) {
-			result.add(other.position)
+			result.add(other.pos)
 			count += 1
 		}
-		result.scl(1f / count.toFloat).add(-boid.position.x, -boid.position.y)
+		result.scl(1f / count.toFloat).add(-boid.pos.x, -boid.pos.y)
 	}
 
 	def alignmentVector(boid: Boid, neighbors: Seq[Boid], maxDistance: Float): Vector2 = {
-		val others = neighbors.filter(other => distanceBetween(boid.position, other.position) < maxDistance)
+		val others = neighbors.filter(other => distanceBetween(boid.pos, other.pos) < maxDistance)
 		if (others.isEmpty)
 			return new Vector2
 		val result = new Vector2
