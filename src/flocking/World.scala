@@ -11,7 +11,7 @@ class World {
   val boids = Seq.fill(256)(createRandomBoid())
 
   def update(): Unit = {
-    val partitionedSpace = SpatialPartitioning.partition(boids)
+    val partitionedSpace = SpatialPartitioning.partition(boids, 16, 64)
     for (boid <- boids) {
       val others = partitionedSpace.neighborsOf(boid).asInstanceOf[Seq[Boid]]
       val radius = 64
