@@ -38,10 +38,23 @@ object SpatialPartitioning {
 
     def neighborsOf(who: Position): Seq[Position] = {
       val (x, y) = castPositionToCellIndex(who)
-      val a = input(x)(y) // todo input(x)(y) ++ input(x)(y + 1)
-      if (a == null)
-        return List.empty
-      val others = a.filterNot(tested => tested == who)
+      def stub(x: Int, y: Int): Seq[Position] = {
+        val max = GRID_SIZE - 1
+        val min = 0
+        if (x > max || y > max || x < min || y < min)
+          return Seq.empty
+        val result = input(x)(y)
+        if (result == null)
+          return Seq.empty
+        result
+      }
+      val joined = new ListBuffer[Position]()
+      for (cx <- -1 to 1) {
+        for (cy <- -1 to 1) {
+          joined ++= stub(x + cx, y + cy)
+        }
+      }
+      val others = joined.filterNot(tested => tested == who)
       others
     }
 

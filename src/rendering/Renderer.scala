@@ -16,7 +16,7 @@ object Renderer {
     renderer.begin(ShapeRenderer.ShapeType.Line)
     renderer.setColor(.25f, .25f, .25f, 1)
     renderGrid()
-    /*renderer.setColor(1, .5f, .5f, 1)
+    renderer.setColor(1, .5f, .5f, 1)
     for (boid <- boids)
       renderRelativeVectorCross(boid.pos, boid.separation)
     renderer.setColor(.5f, 1, .5f, 1)
@@ -24,7 +24,7 @@ object Renderer {
       renderRelativeVectorCross(boid.pos, boid.cohesion)
     renderer.setColor(.5f, .5f, 1, 1)
     for (boid <- boids)
-      renderRelativeVectorCross(boid.pos, boid.alignment)*/
+      renderRelativeVectorCross(boid.pos, boid.alignment)
     renderer.setColor(1, 1, 1, 1)
     for (boid <- boids)
       renderArrow(boid.pos.x, boid.pos.y, boid.rotation)

@@ -8,7 +8,7 @@ import partitioning.SpatialPartitioning
 
 class World {
 
-  val boids = Seq.fill(1024)(createRandomBoid)
+  val boids = Seq.fill(256)(createRandomBoid())
 
   def update(): Unit = {
     val partitionedSpace = SpatialPartitioning.partition(boids)
@@ -23,26 +23,27 @@ class World {
       boid.alignment.set(alignment)
       val combo = new Vector2().add(separation).add(cohesion).add(alignment)
       move(boid, new Vector2(boid.pos).add(combo))
-    }
-
-    val max = 1024
-    for (boid <- boids) {
-      if (boid.pos.x > max)
-        boid.pos.x -= max
-      if (boid.pos.x < 0)
-        boid.pos.x += max
-      if (boid.pos.y > max)
-        boid.pos.y -= max
-      if (boid.pos.y < 0)
-        boid.pos.y += max
+      applyWorldBordersLoop(boid)
     }
   }
 
-  def move(boid : Boid, where: Vector2): Unit = {
+  private def applyWorldBordersLoop(boid: Boid): Unit = {
+    val max = 1024
+    if (boid.pos.x > max)
+      boid.pos.x -= max
+    if (boid.pos.x < 0)
+      boid.pos.x += max
+    if (boid.pos.y > max)
+      boid.pos.y -= max
+    if (boid.pos.y < 0)
+      boid.pos.y += max
+  }
+
+  private def move(boid : Boid, where: Vector2): Unit = {
     val acceleration = .0125f
     val directionToDesignation = pointDirection(where, boid.pos)
     val distanceToDesignation = pointDistance(where, boid.pos)
-    val flySpeedTarget = Math.min(.25f + distanceToDesignation * .025f, boid.maxSpeed)
+    val flySpeedTarget = Math.min(0 + distanceToDesignation * .025f, boid.maxSpeed)
     boid.speed += (flySpeedTarget - boid.speed) * acceleration
     boid.rotation += angdiff(directionToDesignation, boid.rotation) * .0125f
     val vx = boid.speed * cos(boid.rotation)
@@ -50,7 +51,7 @@ class World {
     boid.pos.add(vx, vy)
   }
 
-  private def createRandomBoid: Boid = {
+  private def createRandomBoid(): Boid = {
     val size = 1024
     def randSize = random(size)
     val position = new Vector2(randSize, randSize)
@@ -58,11 +59,11 @@ class World {
     new Boid(position, direction)
   }
 
-  def pointDirection(a: Vector2, b: Vector2) = atan2(a.y - b.y, a.x - b.x)
+  private def pointDirection(a: Vector2, b: Vector2) = atan2(a.y - b.y, a.x - b.x)
 
-  def pointDistance(a: Vector2, b: Vector2) = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2)).toFloat
+  private def pointDistance(a: Vector2, b: Vector2) = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2)).toFloat
 
-  def angdiff(angle0: Float, angle1: Float): Float = {
+  private def angdiff(angle0: Float, angle1: Float): Float = {
     val angle0d = angle0 * MathUtils.radiansToDegrees
     val angle1d = angle1 * MathUtils.radiansToDegrees
     (((((angle0d - angle1d) % 360) + 540) % 360) - 180) * MathUtils.degreesToRadians
