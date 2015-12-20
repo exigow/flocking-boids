@@ -14,11 +14,11 @@ object Demo {
     println(list)
   }
 
-  class Position(x: Float, y: Float) extends QuadTreeElement {
+  class Position(px: Float, py: Float) extends QuadTreeElement {
 
-    override def positionX(): Float = x
+    override def x(): Float = px
 
-    override def positionY(): Float = y
+    override def y(): Float = py
 
   }
 

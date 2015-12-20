@@ -2,8 +2,8 @@ package partitioning;
 
 public interface QuadTreeElement {
 
-  float positionX();
+  float x();
 
-  float positionY();
+  float y();
 
 }

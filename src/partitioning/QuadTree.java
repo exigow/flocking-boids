@@ -32,7 +32,7 @@ public class QuadTree {
   }
 
   public boolean insert(QuadTreeElement e) {
-    if (!bounds.contains(e.positionX(), e.positionY())) {
+    if (!bounds.contains(e.x(), e.y())) {
       return false;
     }
     if (set(e)) {
@@ -51,10 +51,10 @@ public class QuadTree {
   public void query(Quad range, List<QuadTreeElement> results) {
     if (!areIntersecting(bounds, range))
       return;
-    for (int i = 0; i < elements.length; i++) {
-      if (elements[i] != null) {
-        if (range.contains(elements[i].positionX(), elements[i].positionY())) {
-          results.add(elements[i]);
+    for (QuadTreeElement element : elements) {
+      if (element != null) {
+        if (range.contains(element.x(), element.y())) {
+          results.add(element);
         }
       }
     }
