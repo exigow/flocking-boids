@@ -2,6 +2,6 @@ package partitioning
 
 trait QuadTreeElement {
 
-  val position: (Float, Float)
+  def position: (Float, Float)
 
 }
