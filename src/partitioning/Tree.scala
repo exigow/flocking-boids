@@ -22,9 +22,11 @@ class Tree(val bounds: Quad, elemPerQuad: Int = 1) {
 
   def query(range: Quad, results: ListBuffer[QuadTreeElement]): Unit = {
     if (!areIntersecting(bounds, range)) return
-    for (element <- elements)
-      if (range.contains(element.x, element.y))
+    for (element <- elements) {
+      val (x, y) = element.position
+      if (range.contains(x, y))
         results += element
+    }
     if (!hasChildren) return
     topLeft.query(range, results)
     topRight.query(range, results)
@@ -35,7 +37,8 @@ class Tree(val bounds: Quad, elemPerQuad: Int = 1) {
   private def areIntersecting(a: Quad, b: Quad) = (a.x + a.size > b.x) && (a.y + a.size > b.y)
 
   def insert(element: QuadTreeElement): Boolean = {
-    if (!bounds.contains(element.x, element.y)) return false
+    val (x, y) = element.position
+    if (!bounds.contains(x, y)) return false
     if (elements.size < elemPerQuad) {
       elements += element
       return true
