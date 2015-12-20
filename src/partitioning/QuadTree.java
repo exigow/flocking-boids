@@ -23,17 +23,13 @@ public class QuadTree<E extends QuadTreeElement> {
   }
 
   protected boolean set(E e) {
-    for (int i = 0; i < maxElem(); i++) {
+    for (int i = 0; i < elements.length; i++) {
       if (elements[i] == null) {
         elements[i] = e;
         return true;
       }
     }
     return false;
-  }
-
-  public int maxElem() {
-    return elements.length;
   }
 
   public boolean insert(E e) {
@@ -56,7 +52,7 @@ public class QuadTree<E extends QuadTreeElement> {
   public void query(Quad range, List<E> results) {
     if (!areIntersecting(bounds, range))
       return;
-    for (int i = 0; i < maxElem(); i++) {
+    for (int i = 0; i < elements.length; i++) {
       if (elements[i] != null) {
         if (range.contains(elements[i].positionX(), elements[i].positionY())) {
           results.add(elements[i]);
@@ -81,10 +77,10 @@ public class QuadTree<E extends QuadTreeElement> {
       return false;
     }
     float hs = bounds.size() / 2;
-    topLeft  = new QuadTree<>(bounds.x(), bounds.y(), hs, maxElem());
-    topRight = new QuadTree<>(bounds.x()+hs, bounds.y(), hs, maxElem());
-    botLeft  = new QuadTree<>(bounds.x(), bounds.y()+hs, hs, maxElem());
-    botRight = new QuadTree<>(bounds.x()+hs, bounds.y()+hs, hs, maxElem());
+    topLeft  = new QuadTree<>(bounds.x(), bounds.y(), hs, elements.length);
+    topRight = new QuadTree<>(bounds.x()+hs, bounds.y(), hs, elements.length);
+    botLeft  = new QuadTree<>(bounds.x(), bounds.y()+hs, hs, elements.length);
+    botRight = new QuadTree<>(bounds.x()+hs, bounds.y()+hs, hs, elements.length);
     return true;
   }
 
