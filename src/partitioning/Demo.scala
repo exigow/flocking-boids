@@ -10,7 +10,7 @@ object Demo {
     tree.insert(new Position(300, 300))
 
     val list = new ListBuffer[QuadTreeElement]()
-    tree.query(new Quad(256, 256, 128), list)
+    tree.query(new Quad(128, 128, 256), list)
     println(list)
   }
 
