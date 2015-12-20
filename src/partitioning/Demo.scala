@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 object Demo {
 
   def main(args: Array[String]): Unit = {
-    val tree = new Tree(new Quad(0, 0, 512))
+    val tree = new Tree(new Quad(size = 512))
     tree.insert(new Position(200, 200))
     tree.insert(new Position(300, 300))
 
@@ -17,6 +17,8 @@ object Demo {
   class Position(x: Float, y: Float) extends QuadTreeElement {
 
     override def position = (x, y)
+
+    override def toString = "[%s, %s]".format(x, y)
 
   }
 
