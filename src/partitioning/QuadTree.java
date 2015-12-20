@@ -2,27 +2,26 @@ package partitioning;
 
 import java.util.List;
 
-public class QuadTree<E extends QuadTreeElement> {
+public class QuadTree {
 
   private final Quad bounds;
-  private E[] elements;
+  private QuadTreeElement[] elements;
 
-  private QuadTree<E> topLeft;
-  private QuadTree<E> topRight;
-  private QuadTree<E> botLeft;
-  private QuadTree<E> botRight;
+  private QuadTree topLeft;
+  private QuadTree topRight;
+  private QuadTree botLeft;
+  private QuadTree botRight;
 
   public QuadTree(float size, int elemPerQuad) {
     this(0, 0, size, elemPerQuad);
   }
 
-  @SuppressWarnings("unchecked")
   public QuadTree(float x, float y, float size, int elemPerQuad) {
     bounds = new Quad(x, y, size);
-    elements = (E[])(new QuadTreeElement[elemPerQuad]);
+    elements = new QuadTreeElement[elemPerQuad];
   }
 
-  protected boolean set(E e) {
+  protected boolean set(QuadTreeElement e) {
     for (int i = 0; i < elements.length; i++) {
       if (elements[i] == null) {
         elements[i] = e;
@@ -32,7 +31,7 @@ public class QuadTree<E extends QuadTreeElement> {
     return false;
   }
 
-  public boolean insert(E e) {
+  public boolean insert(QuadTreeElement e) {
     if (!bounds.contains(e.positionX(), e.positionY())) {
       return false;
     }
@@ -49,7 +48,7 @@ public class QuadTree<E extends QuadTreeElement> {
     }
   }
 
-  public void query(Quad range, List<E> results) {
+  public void query(Quad range, List<QuadTreeElement> results) {
     if (!areIntersecting(bounds, range))
       return;
     for (int i = 0; i < elements.length; i++) {
@@ -77,10 +76,10 @@ public class QuadTree<E extends QuadTreeElement> {
       return false;
     }
     float hs = bounds.size() / 2;
-    topLeft  = new QuadTree<>(bounds.x(), bounds.y(), hs, elements.length);
-    topRight = new QuadTree<>(bounds.x()+hs, bounds.y(), hs, elements.length);
-    botLeft  = new QuadTree<>(bounds.x(), bounds.y()+hs, hs, elements.length);
-    botRight = new QuadTree<>(bounds.x()+hs, bounds.y()+hs, hs, elements.length);
+    topLeft  = new QuadTree(bounds.x(), bounds.y(), hs, elements.length);
+    topRight = new QuadTree(bounds.x()+hs, bounds.y(), hs, elements.length);
+    botLeft  = new QuadTree(bounds.x(), bounds.y()+hs, hs, elements.length);
+    botRight = new QuadTree(bounds.x()+hs, bounds.y()+hs, hs, elements.length);
     return true;
   }
 
