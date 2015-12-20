@@ -20,27 +20,6 @@ class Tree(val bounds: Quad, elemPerQuad: Int = 1) {
     true
   }
 
-  /*
-   public void query(Quad range, List<QuadTreeElement> results) {
-    if (!areIntersecting(bounds, range))
-      return;
-    for (QuadTreeElement element : elements) {
-      if (element != null) {
-        if (range.contains(element.x(), element.y())) {
-          results.add(element);
-        }
-      }
-    }
-    if (!hasChildren()) {
-      return;
-    }
-    topLeft.query(range, results);
-    topRight.query(range, results);
-    botLeft.query(range, results);
-    botRight.query(range, results);
-  }
-   */
-
   def query(range: Quad, results: ListBuffer[QuadTreeElement]): Unit = {
     if (!areIntersecting(bounds, range)) return
     for (element <- elements)
