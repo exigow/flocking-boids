@@ -20,4 +20,5 @@ This library was used to show window and render simulation. This can be easily r
 Optimization
 ------------
 
-The neighbors detection and vector calculations are build on top of **2d grid spatial partitioning**.
+The neighbors detection and vector calculations are build on top of **2d grid spatial partitioning** algorithm. 
+Everything works very **fast**.
