@@ -6,7 +6,7 @@ Flocking/Boids Demo
 
 ![Image with boids with shape of black arrows and steer vectors on white background.] (https://raw.githubusercontent.com/exigow/flocking-boids/master/screenshots/preview-on-white-background.png)
 
-An implementation of Craig Reynold's Boids program ([source] (http://www.red3d.com/cwr/boids/)) to simulate the flocking behavior of birds in two dimensional space. Each boid steers itself based on rules of __avoidance__, __alignment__, and __coherence__.
+An implementation of Craig Reynold's Boids program ([papers] (http://www.red3d.com/cwr/boids/)) to simulate the flocking behavior of birds in two dimensional space. Each boid steers itself based on rules of __avoidance__, __alignment__, and __coherence__.
 
 All written in **Scala** language.
 
